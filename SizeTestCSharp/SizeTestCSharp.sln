@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SizeTestCSharp", "SizeTestCSharp.csproj", "{F9120DC6-121D-48D4-A32B-56649730BF02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Unix|x64 = Unix|x64
+		Unix|x86 = Unix|x86
+		Windows|x64 = Windows|x64
+		Windows|x86 = Windows|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9120DC6-121D-48D4-A32B-56649730BF02}.Unix|x64.ActiveCfg = Unix|x64
+		{F9120DC6-121D-48D4-A32B-56649730BF02}.Unix|x64.Build.0 = Unix|x64
+		{F9120DC6-121D-48D4-A32B-56649730BF02}.Unix|x86.ActiveCfg = Unix|x86
+		{F9120DC6-121D-48D4-A32B-56649730BF02}.Unix|x86.Build.0 = Unix|x86
+		{F9120DC6-121D-48D4-A32B-56649730BF02}.Windows|x64.ActiveCfg = Windows|x64
+		{F9120DC6-121D-48D4-A32B-56649730BF02}.Windows|x64.Build.0 = Windows|x64
+		{F9120DC6-121D-48D4-A32B-56649730BF02}.Windows|x86.ActiveCfg = Windows|x86
+		{F9120DC6-121D-48D4-A32B-56649730BF02}.Windows|x86.Build.0 = Windows|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
