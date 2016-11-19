@@ -1,0 +1,9 @@
+SizeTestUnity/Library/
+SizeTestUnity/Assets/Plugins/
+SizeTestUnity/Assets/Editor/
+SizeTestCSharp/obj/
+SizeTestCSharp/bin/
+SizeTestCSharp/Steamworks.NET/
+SizeTestC++/x64/
+SizeTestC++/Win32/
+Generated/
