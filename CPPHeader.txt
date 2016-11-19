@@ -1,0 +1,43 @@
+#if defined( _WIN32 )
+__pragma(warning(push))
+__pragma(warning(disable:4996)) // 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead.
+#endif
+#include "steam_gameserver.h" // Includes steam_api internally
+#include "isteamgamecoordinator.h"
+#if defined( _WIN32 )
+__pragma(warning(pop))
+#endif
+#include <fstream>
+
+#ifndef WIN32
+#define offsetof(type, member)  __builtin_offsetof (type, member)
+#endif
+
+void CallbackSizesTest() {
+	std::string path = "Steamworks.NET-SizeTest\\Generated\\";
+
+	std::string filename = path + "C++";
+	if ((sizeof(void*) == 8)) {
+		filename += "_X64";
+	}
+	else {
+		filename += "_X86";
+	}
+#if WIN32
+	filename += "_Win";
+#else
+	filename += "_UNIX";
+#endif
+	filename += ".txt";
+
+	std::fstream fs;
+	fs.open(filename.c_str(), std::fstream::out);
+
+	fs << "=================================================\n";
+	fs << "Environment.Is64BitProcess: " << ((sizeof(void*) == 8) ? "True" : "False") << ", IntPtr.Size: " << sizeof(void*) << "\n";
+#if defined( VALVE_CALLBACK_PACK_SMALL )
+	fs << "Packsize: 4\n";
+#elif defined( VALVE_CALLBACK_PACK_LARGE )
+	fs << "Packsize: 8\n";
+#endif
+	fs << "=================================================\n";

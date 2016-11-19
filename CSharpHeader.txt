@@ -1,0 +1,28 @@
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+namespace Steamworks {
+	public static class CallbackSizes {
+		public static void Test() {
+			bool Is64BitProcess = Environment.Is64BitProcess;
+
+			List<string> lines = new List<string>(120);
+			string filename = "C#";
+			filename += Is64BitProcess ? "_X64" : "_X86";
+			filename += (Packsize.value == 8) ? "_Win" : "_UNIX";
+#if UNITY_STANDALONE
+			filename += "_Unity";
+#else
+			filename += "_Standalone";
+#endif
+			filename += ".txt";
+
+			string path = "Steamworks.NET-SizeTest\\Generated\\";
+			/*if (!System.IO.Directory.Exists(path)) {
+				path = "";
+			}*/
+
+			lines.Add("=================================================");
+			lines.Add("Environment.Is64BitProcess: " + Is64BitProcess + ", IntPtr.Size: " + IntPtr.Size);
+			lines.Add("Packsize: " + Packsize.value);
+			lines.Add("=================================================");
