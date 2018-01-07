@@ -14,7 +14,7 @@
     <ProjectGuid>{0E175696-F70D-441A-A057-E11ED7A8057A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SizeTestC++</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
