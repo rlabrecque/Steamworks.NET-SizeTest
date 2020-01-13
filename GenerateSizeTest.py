@@ -7,6 +7,10 @@ g_SkippedStructs = (
     "PS3TrophiesInstalled_t",
 )
 
+g_SkippedFields = (
+    "SteamIPAddress_t",
+)
+
 def OutputCPP(callbacklines, structlines):
     with open("CPPHeader.txt" , "r") as header:
         CPPHeader = header.read()
@@ -41,19 +45,19 @@ def OutputCSharp(callbacklines, structLines):
 
 def ParseCSharp(struct):
     offsets = ''
-    if struct.fields:
+    if struct.fields and struct.name not in g_SkippedFields:
         offsets = ' + ", Offsetof: "'
         offsets += ' + ", "'.join([' + Marshal.OffsetOf(typeof({0}), "{1}")'.format(struct.name, field.name) for field in struct.fields])
     return '\t\t\tlines.Add("{0}, Sizeof: " + Marshal.SizeOf(typeof({0})){1});'.format(struct.name, offsets)
 
 def ParseCpp(struct):
     offsets = '\tfs << "{0}, Sizeof: " << sizeof({0}) << '.format(struct.name)
-    if len(struct.fields) > 0:
+    if len(struct.fields) > 0 and struct.name not in g_SkippedFields:
         offsets += ' ", Offsetof: " << '
-    for i, f in enumerate(struct.fields):
-        offsets += 'offsetof({0}, {1}) << '.format(struct.name, f.name)
-        if i != len(struct.fields) - 1:
-            offsets += '", " << '
+        for i, f in enumerate(struct.fields):
+            offsets += 'offsetof({0}, {1}) << '.format(struct.name, f.name)
+            if i != len(struct.fields) - 1:
+                offsets += '", " << '
     offsets += '"\\n";'
     return offsets
 
