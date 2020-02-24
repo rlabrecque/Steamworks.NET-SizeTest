@@ -5,6 +5,11 @@ from SteamworksParser import steamworksparser
 g_SkippedStructs = (
     "PSNGameBootInviteResult_t",
     "PS3TrophiesInstalled_t",
+
+    # We remap these ISteamController structs to ISteamInput
+    "ControllerAnalogActionData_t",
+    "ControllerDigitalActionData_t",
+    "ControllerMotionData_t",
 )
 
 g_SkippedFields = (
@@ -78,7 +83,7 @@ def main(parser):
             csharpLines.append(ParseCSharp(callback))
             cppcallbackLines.append(ParseCpp(callback))
         for struct in f.structs:
-            if callback.name in g_SkippedStructs:
+            if struct.name in g_SkippedStructs:
                 continue
             structLines.append(ParseCSharp(struct))
             cppcStructLines.append(ParseCpp(struct))
