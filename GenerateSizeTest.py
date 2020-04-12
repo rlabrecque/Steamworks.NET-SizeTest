@@ -52,7 +52,16 @@ def ParseCSharp(struct):
     offsets = ''
     if struct.fields and struct.name not in g_SkippedFields:
         offsets = ' + ", Offsetof: "'
-        offsets += ' + ", "'.join([' + Marshal.OffsetOf(typeof({0}), "{1}")'.format(struct.name, field.name) for field in struct.fields])
+        for i, field in enumerate(struct.fields):
+            if i > 0:
+                 offsets += ' + ", "'
+
+            fieldname = field.name
+
+            if field.arraysize and field.type in ['const char *', 'char']:
+                fieldname += '_'
+
+            offsets += f' + Marshal.OffsetOf(typeof({struct.name}), "{fieldname}")'
     return '\t\t\tlines.Add("{0}, Sizeof: " + Marshal.SizeOf(typeof({0})){1});'.format(struct.name, offsets)
 
 def ParseCpp(struct):
