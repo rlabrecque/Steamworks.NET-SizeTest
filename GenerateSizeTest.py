@@ -10,11 +10,23 @@ g_SkippedStructs = (
     "ControllerAnalogActionData_t",
     "ControllerDigitalActionData_t",
     "ControllerMotionData_t",
+
+    # String formatting functions. We just use .ToString() instead.
+    "SteamNetworkingIdentityRender",
+    "SteamNetworkingIPAddrRender",
+    "SteamNetworkingPOPIDRender",
 )
 
 g_SkippedFields = (
     "SteamIPAddress_t",
 )
+
+
+g_SpecialFieldTypes = {
+    "SteamDatagramGameCoordinatorServerLogin": {
+        "m_appData": "int8",
+    },
+}
 
 def OutputCPP(callbacklines, structlines):
     with open("CPPHeader.txt" , "r") as header:
@@ -58,20 +70,24 @@ def ParseCSharp(struct):
 
             fieldname = field.name
 
-            if field.arraysize and field.type in ['const char *', 'char']:
+            fieldtype = g_SpecialFieldTypes.get(struct.name, {}).get(fieldname, field.type)
+
+            if field.arraysize and fieldtype in ['const char *', 'char']:
                 fieldname += '_'
 
             offsets += f' + Marshal.OffsetOf(typeof({struct.name}), "{fieldname}")'
+
     return '\t\t\tlines.Add("{0}, Sizeof: " + Marshal.SizeOf(typeof({0})){1});'.format(struct.name, offsets)
 
 def ParseCpp(struct):
     offsets = '\tfs << "{0}, Sizeof: " << sizeof({0}) << '.format(struct.name)
     if len(struct.fields) > 0 and struct.name not in g_SkippedFields:
         offsets += ' ", Offsetof: " << '
-        for i, f in enumerate(struct.fields):
-            offsets += 'offsetof({0}, {1}) << '.format(struct.name, f.name)
+        for i, field in enumerate(struct.fields):
+            offsets += 'offsetof({0}, {1}) << '.format(struct.name, field.name)
             if i != len(struct.fields) - 1:
                 offsets += '", " << '
+
     offsets += '"\\n";'
     return offsets
 
@@ -91,11 +107,13 @@ def main(parser):
                 continue
             csharpLines.append(ParseCSharp(callback))
             cppcallbackLines.append(ParseCpp(callback))
+
         for struct in f.structs:
             if struct.name in g_SkippedStructs:
                 continue
             structLines.append(ParseCSharp(struct))
             cppcStructLines.append(ParseCpp(struct))
+
     OutputCSharp(csharpLines, structLines)
     OutputCPP(cppcallbackLines, cppcStructLines)
 
