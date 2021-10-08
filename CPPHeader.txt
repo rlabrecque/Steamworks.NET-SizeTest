@@ -4,7 +4,6 @@ __pragma(warning(disable:4996)) // 'strncpy': This function or variable may be u
 #endif
 #include "steam_gameserver.h" // Includes steam_api internally
 #include "isteamgamecoordinator.h"
-#include "steamdatagram_tickets.h"
 #if defined( _WIN32 )
 __pragma(warning(pop))
 #endif

@@ -15,6 +15,9 @@ g_SkippedStructs = (
     "SteamNetworkingIdentityRender",
     "SteamNetworkingIPAddrRender",
     "SteamNetworkingPOPIDRender",
+
+    # TODO: I don't have time to deal with this right now.
+    "SteamInputActionEvent_t",
 )
 
 g_SkippedFields = (
@@ -72,7 +75,7 @@ def ParseCSharp(struct):
 
             fieldtype = g_SpecialFieldTypes.get(struct.name, {}).get(fieldname, field.type)
 
-            if field.arraysize and fieldtype in ['const char *', 'char']:
+            if field.arraysize and fieldtype in ['const char *', 'char'] and struct.name != "MatchMakingKeyValuePair_t":
                 fieldname += '_'
 
             offsets += f' + Marshal.OffsetOf(typeof({struct.name}), "{fieldname}")'
