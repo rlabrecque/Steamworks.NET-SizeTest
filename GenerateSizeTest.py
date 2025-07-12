@@ -3,9 +3,6 @@ import sys
 from SteamworksParser import steamworksparser
 
 g_SkippedStructs = (
-    "PSNGameBootInviteResult_t",
-    "PS3TrophiesInstalled_t",
-
     # We remap these ISteamController structs to ISteamInput
     "ControllerAnalogActionData_t",
     "ControllerDigitalActionData_t",
@@ -22,6 +19,7 @@ g_SkippedStructs = (
 
 g_SkippedFields = (
     "SteamIPAddress_t",
+    "RemotePlayInput_t",
 )
 
 
